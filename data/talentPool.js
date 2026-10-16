@@ -1,0 +1,50 @@
+export const TALENT_POOL = [
+  {
+    id: "cand_01",
+    name: "Aakash Sharma",
+    college: "Tier-3 Institute of Tech (Bhopal)",
+    degree: "B.Tech Computer Science (2025)",
+    role: "Frontend React Engineer",
+    badge: "Verified Proof-of-Work (Level 4)",
+    atsScore: 94,
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    skills: ["React 18", "TypeScript", "Tailwind CSS", "Supabase", "Git/CI-CD"],
+    github: "https://github.com/aakash-sharma-dev",
+    demo: "https://fintrack-showcase.vercel.app",
+    summary: "Completed all 8 weeks of PathPilot Frontend track. Built production finance tracker with 98 Lighthouse score, 100% test coverage for utils, and zero lint warnings.",
+    weeklyCommitActivity: [12, 18, 24, 30, 28, 35, 42, 38],
+    mockInterviewRating: "4.9 / 5.0"
+  },
+  {
+    id: "cand_02",
+    name: "Pooja Deshmukh",
+    college: "Government College of Engineering (Amravati)",
+    degree: "B.E. Electronics (2025)",
+    role: "Python Data Analyst",
+    badge: "Verified Proof-of-Work (Level 4)",
+    atsScore: 92,
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
+    skills: ["SQL / PostgreSQL", "Python (Pandas, NumPy)", "Power BI", "DAX", "EDA"],
+    github: "https://github.com/pooja-analytics",
+    demo: "https://app.powerbi.com/view?r=sample-retail-churn",
+    summary: "Non-CS engineer who mastered SQL CTEs and Pandas. Built end-to-end Retail Churn model diagnosing an 18% retention drop with interactive Power BI dashboards.",
+    weeklyCommitActivity: [8, 14, 20, 22, 29, 31, 36, 40],
+    mockInterviewRating: "4.8 / 5.0"
+  },
+  {
+    id: "cand_03",
+    name: "Rohan Varma",
+    college: "Dr. APJ Abdul Kalam Technical University (Lucknow)",
+    degree: "BCA (2024)",
+    role: "Backend & Cloud Associate",
+    badge: "Verified Proof-of-Work (Level 3)",
+    atsScore: 91,
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    skills: ["Node.js", "Express", "PostgreSQL", "Docker", "Redis", "JWT"],
+    github: "https://github.com/rohan-varma-backend",
+    demo: "https://taskflow-api.onrender.com/api-docs",
+    summary: "Built secure REST API with JWT refresh token rotation, rate limiting, and Redis caching. Containerized via Docker Compose with full Postman documentation.",
+    weeklyCommitActivity: [10, 16, 18, 25, 27, 34, 39, 36],
+    mockInterviewRating: "4.7 / 5.0"
+  }
+];

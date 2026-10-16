@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PathPilot - Zero-to-Offer Career Engine for Freshers</title>
+  <meta name="description" content="Intelligent curriculum orchestrator, proof-of-work project validator, and off-campus placement bridge for Tier-2/3 college freshers and career switchers." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Main Design System -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <div class="brand-section" id="brandBtn">
+      <div class="brand-logo-icon">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+      <div class="brand-text">
+        <h1>PathPilot</h1>
+        <div class="brand-tagline">Zero-to-Offer Career Engine</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Active Role Dropdown -->
+      <div class="role-badge-selector" id="roleSelectorTrigger">
+        <i class="fa-solid fa-code text-gradient"></i>
+        <span id="currentRoleLabel">Frontend Web Engineer</span>
+        <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+      </div>
+
+      <!-- Streak Counter -->
+      <div class="streak-pill" id="streakWidget" title="Click to log today's study check-in!">
+        <i class="fa-solid fa-fire-flame-curved streak-flame"></i>
+        <span id="streakCountDisplay">Day 1</span>
+        <span style="font-size: 0.75rem; opacity: 0.8;">Check-in</span>
+      </div>
+
+      <!-- Sound Toggle -->
+      <button class="btn btn-secondary btn-sm" id="soundToggleBtn" title="Toggle audio feedback">
+        <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+      </button>
+
+      <!-- Pro Badge / Modal Trigger -->
+      <button class="btn btn-pro btn-sm" id="upgradeModalBtn">
+        <i class="fa-solid fa-crown"></i>
+        <span id="membershipStatusText">Get Pro (₹499)</span>
+      </button>
+
+      <!-- Mobile Hamburger -->
+      <button class="btn btn-secondary btn-sm" id="mobileMenuBtn" style="display: none;">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="sidebar">
+      <div>
+        <div class="nav-group-label">Core Roadmap Engine</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a class="nav-item active" data-view="roadmap">
+              <span class="icon"><i class="fa-solid fa-route"></i></span>
+              <span>Curated Roadmaps</span>
+              <span class="nav-pill-badge live">Live</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="intake">
+              <span class="icon"><i class="fa-solid fa-clipboard-check"></i></span>
+              <span>Diagnostic Intake</span>
+              <span class="nav-pill-badge">Calibrate</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="projects">
+              <span class="icon"><i class="fa-solid fa-shield-halved"></i></span>
+              <span>Proof-of-Work Projects</span>
+              <span class="nav-pill-badge hot">Anti-Hell</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-label" style="margin-top: 1rem;">Placement Bridge</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a class="nav-item" data-view="resume">
+              <span class="icon"><i class="fa-solid fa-file-invoice"></i></span>
+              <span>ATS Resume Builder</span>
+              <span class="nav-pill-badge">90+ ATS</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="jobs">
+              <span class="icon"><i class="fa-solid fa-crosshairs"></i></span>
+              <span>Fresher Job Radar</span>
+              <span class="nav-pill-badge live">Verified</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="interview">
+              <span class="icon"><i class="fa-solid fa-brain"></i></span>
+              <span>Interview Readiness</span>
+              <span class="nav-pill-badge">Top 50</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-label" style="margin-top: 1rem;">Ecosystem & B2B</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a class="nav-item" data-view="employer">
+              <span class="icon"><i class="fa-solid fa-building-user"></i></span>
+              <span>B2B Talent Search</span>
+              <span class="nav-pill-badge">Recruiter</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="community">
+              <span class="icon"><i class="fa-brands fa-youtube"></i></span>
+              <span>Creator Hub & Squads</span>
+              <span class="nav-pill-badge">Zero CAC</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Creator Study Squad Footer -->
+      <div class="sidebar-footer-card">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+          <span style="color: #f59e0b; font-size: 0.9rem;"><i class="fa-solid fa-users"></i></span>
+          <h4>Study Squad Alpha</h4>
+        </div>
+        <p>You're paired with 4 peers in your role track. Share daily streak check-ins on Discord/WhatsApp.</p>
+        <button class="btn btn-secondary btn-sm" style="width: 100%; font-size: 0.75rem;" id="openSquadBtn">
+          <i class="fa-brands fa-discord"></i> Join Squad Room
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+      
+      <!-- ========================================== -->
+      <!-- VIEW 1: CURATED ROADMAPS (DEFAULT VIEW)    -->
+      <!-- ========================================== -->
+      <section class="view-section active" id="view-roadmap">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Interactive <span class="text-gradient" id="roadmapRoleHeader">Frontend Web Engineer</span> Track</h2>
+            <p id="roadmapSummaryHeader">Curated day-by-day learning track assembled entirely from the highest-quality open web resources.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-outline-emerald" id="shareProgressBtn">
+              <i class="fa-solid fa-share-nodes"></i> Share Progress Card
+            </button>
+            <button class="btn btn-primary" id="retakeQuizBtn">
+              <i class="fa-solid fa-sliders"></i> Re-Calibrate Timeline
+            </button>
+          </div>
+        </div>
+
+        <!-- Roadmap Overview Hero Card -->
+        <div class="roadmap-overview-grid">
+          <div class="roadmap-summary-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="project-badge standard" id="roleBadgeTag">Most In-Demand Fresher Track</span>
+                <h3 style="font-size: 1.4rem; margin-top: 0.35rem;" id="roadmapTargetTitle">Frontend React & Cloud Architecture</h3>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Fresher Market Range</div>
+                <div style="font-size: 1.15rem; font-weight: 800; color: #34d399;" id="salaryRangeText">₹4.5 - ₹9.0 LPA</div>
+              </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-row">
+              <div class="stat-pill">
+                <div class="value" id="progressPercentageText">0%</div>
+                <div class="label">Completed</div>
+              </div>
+              <div class="stat-pill">
+                <div class="value" id="completedTopicsCount">0 / 24</div>
+                <div class="label">Topics Mastered</div>
+              </div>
+              <div class="stat-pill">
+                <div class="value" id="targetFinishDate">Dec 2026</div>
+                <div class="label">Target Readiness</div>
+              </div>
+              <div class="stat-pill">
+                <div class="value" id="hoursStudiedText">0 hrs</div>
+                <div class="label">Time Invested</div>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="margin-top: 1.5rem; background: var(--bg-surface-elevated); height: 8px; border-radius: 99px; overflow: hidden;">
+              <div id="overallProgressBar" style="width: 0%; height: 100%; background: var(--gradient-brand); transition: width 0.4s ease;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Action & Daily Habit Panel -->
+          <div class="quick-action-panel">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <h4 style="font-size: 0.95rem;"><i class="fa-solid fa-calendar-check text-gradient"></i> Study Heatmap</h4>
+                <span style="font-size: 0.72rem; color: #fbbf24; font-weight: 700;"><i class="fa-solid fa-fire"></i> Active Streak</span>
+              </div>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem;">Consistency beats talent. Complete at least one topic daily to maintain your streak.</p>
+              
+              <!-- Habit Grid -->
+              <div class="heatmap-card">
+                <div class="heatmap-header">
+                  <span>Last 30 Days</span>
+                  <span id="streakDaysSummary">1 day streak</span>
+                </div>
+                <div class="heatmap-grid" id="habitHeatmapGrid">
+                  <!-- Dynamically rendered cells -->
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;" id="logStudyHoursBtn">
+                <i class="fa-solid fa-plus"></i> Log Study Time
+              </button>
+              <button class="btn btn-outline-emerald btn-sm" style="flex: 1;" id="openNotesDrawerBtn">
+                <i class="fa-solid fa-book-bookmark"></i> Quick Notes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Curriculum Timeline -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <h3 style="font-size: 1.35rem; font-weight: 800;">Curated Week-by-Week Roadmap</h3>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="expandAllWeeksBtn">Expand All</button>
+            <button class="btn btn-secondary btn-sm" id="collapseAllWeeksBtn">Collapse All</button>
+          </div>
+        </div>
+
+        <div class="weeks-timeline" id="weeksTimelineContainer">
+          <!-- Dynamically populated from data/roadmaps.js -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: DIAGNOSTIC INTAKE WIZARD           -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-intake">
+        <div class="diagnostic-container">
+          <div class="view-header" style="text-align: center; display: block; margin-bottom: 1.5rem;">
+            <h2>Career Role Finder & <span class="text-gradient">Diagnostic Intake</span></h2>
+            <p>Tell us your background and take a brief 5-minute calibration quiz to tailor your exact roadmap schedule.</p>
+          </div>
+
+          <!-- Wizard Step Indicator -->
+          <div class="wizard-step-progress">
+            <div class="wizard-progress-fill" id="wizardProgressBar" style="width: 25%;"></div>
+            <div class="step-node active" id="node-1">1</div>
+            <div class="step-node" id="node-2">2</div>
+            <div class="step-node" id="node-3">3</div>
+            <div class="step-node" id="node-4">4</div>
+          </div>
+
+          <!-- Step 1: Target Role -->
+          <div class="diagnostic-card wizard-step-panel" id="wizard-step-1">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.4rem;">Step 1: Choose Your Target Tech Role</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">Select the domain where you want to secure an entry-level offer.</p>
+
+            <div class="options-grid">
+              <div class="select-card selected" data-value="frontend" data-group="role">
+                <div class="card-icon"><i class="fa-brands fa-react" style="color: #06b6d4;"></i></div>
+                <h4>Frontend Web Engineer</h4>
+                <p>HTML5, Modern CSS, ES6+ JS, React 18, Supabase, Tailwind, Performance & Git.</p>
+              </div>
+
+              <div class="select-card" data-value="data" data-group="role">
+                <div class="card-icon"><i class="fa-solid fa-chart-line" style="color: #10b981;"></i></div>
+                <h4>Python Data Analyst</h4>
+                <p>Advanced Excel, PostgreSQL, Python (Pandas, NumPy), Power BI dashboards & Business metrics.</p>
+              </div>
+
+              <div class="select-card" data-value="backend" data-group="role">
+                <div class="card-icon"><i class="fa-solid fa-server" style="color: #8b5cf6;"></i></div>
+                <h4>Backend & Cloud Associate</h4>
+                <p>Node.js, Express, REST APIs, PostgreSQL, Redis, Docker containers & JWT auth.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+              <button class="btn btn-primary" id="wizardNextBtn1">
+                Continue to Background <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Educational Background -->
+          <div class="diagnostic-card wizard-step-panel" id="wizard-step-2" style="display: none;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.4rem;">Step 2: What is Your Educational Background?</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">We tailor the foundational pacing according to your baseline exposure.</p>
+
+            <div class="options-grid">
+              <div class="select-card selected" data-value="tier3_cs" data-group="education">
+                <div class="card-icon"><i class="fa-solid fa-graduation-cap" style="color: #6366f1;"></i></div>
+                <h4>Tier-2 / Tier-3 College CS / IT</h4>
+                <p>Knows theoretical concepts but lacks deployable fullstack projects or industry practices.</p>
+              </div>
+
+              <div class="select-card" data-value="non_cs" data-group="education">
+                <div class="card-icon"><i class="fa-solid fa-gears" style="color: #f59e0b;"></i></div>
+                <h4>Non-CS Engineering (Mech/Civil/EE)</h4>
+                <p>Strong problem solving but transitioning into software engineering without campus support.</p>
+              </div>
+
+              <div class="select-card" data-value="bca_bsc" data-group="education">
+                <div class="card-icon"><i class="fa-solid fa-laptop-code" style="color: #06b6d4;"></i></div>
+                <h4>BCA / B.Sc / MCA Degree</h4>
+                <p>Looking to crack off-campus tech roles by demonstrating tangible proof of work.</p>
+              </div>
+
+              <div class="select-card" data-value="switcher" data-group="education">
+                <div class="card-icon"><i class="fa-solid fa-repeat" style="color: #ec4899;"></i></div>
+                <h4>Non-Tech Career Switcher</h4>
+                <p>Currently in support, sales, or BPO looking to build a tech portfolio from ground up.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+              <button class="btn btn-secondary" id="wizardBackBtn2"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" id="wizardNextBtn2">Continue to Time Commitment <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 3: Weekly Time Commitment -->
+          <div class="diagnostic-card wizard-step-panel" id="wizard-step-3" style="display: none;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.4rem;">Step 3: How Many Hours Can You Study Per Week?</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">Our dynamic scheduler calculates your exact graduation date.</p>
+
+            <div class="options-grid">
+              <div class="select-card selected" data-value="student_15" data-group="hours">
+                <div class="card-icon"><i class="fa-solid fa-book-open-reader" style="color: #06b6d4;"></i></div>
+                <h4>College Student Track (12 - 15 hrs/week)</h4>
+                <p>1-2 hours on weekdays + 4 hours on weekends. Estimated 10-12 weeks to complete.</p>
+              </div>
+
+              <div class="select-card" data-value="fulltime_35" data-group="hours">
+                <div class="card-icon"><i class="fa-solid fa-bolt" style="color: #10b981;"></i></div>
+                <h4>Full-Time Job Seeker (35 - 40 hrs/week)</h4>
+                <p>Immersive 6 hours/day sprint. Fast-track readiness in 6-8 weeks.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+              <button class="btn btn-secondary" id="wizardBackBtn3"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" id="wizardNextBtn3">Take Calibration Quiz (5 Qs) <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 4: Calibration Quiz -->
+          <div class="diagnostic-card wizard-step-panel" id="wizard-step-4" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="font-size: 1.3rem;">Step 4: Skill Diagnostic Quiz</h3>
+              <span class="mono" style="font-size: 0.85rem; color: var(--cyan);" id="quizQuestionProgress">Question 1 of 5</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">Answer honestly. If you already master fundamentals, we can fast-track you into advanced milestone projects!</p>
+
+            <div id="quizQuestionCard">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div id="quizFeedbackBox" style="display: none; padding: 1rem; border-radius: var(--radius-md); margin-top: 1rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium);">
+              <div id="quizFeedbackTitle" style="font-weight: 700; margin-bottom: 0.25rem;"></div>
+              <div id="quizFeedbackText" style="font-size: 0.84rem; color: var(--text-muted);"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+              <button class="btn btn-secondary" id="wizardBackBtn4"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" id="wizardNextQuizQBtn" style="display: none;">Next Question <i class="fa-solid fa-arrow-right"></i></button>
+              <button class="btn btn-gradient" id="wizardFinishQuizBtn" style="display: none;">Generate My Custom Plan <i class="fa-solid fa-check"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 5: Final Calibration Result -->
+          <div class="diagnostic-card wizard-step-panel" id="wizard-step-5" style="display: none; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 0.75rem;">🚀</div>
+            <h3 style="font-size: 1.7rem; margin-bottom: 0.5rem;">Diagnostic Complete! Your Plan is Calibrated</h3>
+            <p style="color: var(--text-muted); max-width: 550px; margin: 0 auto 1.5rem; font-size: 0.92rem;" id="calibrationSummaryText">
+              Based on your answers, we've structured your personalized learning path with target readiness in 8 weeks.
+            </p>
+
+            <div class="stats-row" style="max-width: 600px; margin: 0 auto 2rem;">
+              <div class="stat-pill">
+                <div class="value" id="quizScoreDisplay">4 / 5</div>
+                <div class="label">Quiz Score</div>
+              </div>
+              <div class="stat-pill">
+                <div class="value" id="calibratedPaceDisplay">Standard</div>
+                <div class="label">Pacing</div>
+              </div>
+              <div class="stat-pill">
+                <div class="value" id="calibratedTargetMonth">Dec 2026</div>
+                <div class="label">Job Ready</div>
+              </div>
+            </div>
+
+            <button class="btn btn-gradient" id="launchCalibratedRoadmapBtn" style="padding: 0.75rem 2rem; font-size: 1rem;">
+              Open My Calibrated Roadmap <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: PROOF-OF-WORK PROJECT BUILDER      -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-projects">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Proof-of-Work <span class="text-gradient">Project Verification</span> Engine</h2>
+            <p>Escape "Tutorial Hell". Build from rigorous specification briefs and submit your GitHub & live demo for automated audit.</p>
+          </div>
+          <button class="btn btn-outline-emerald" id="viewBadgesBtn">
+            <i class="fa-solid fa-award"></i> View My Verified Badges
+          </button>
+        </div>
+
+        <!-- Banner Alert -->
+        <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+          <i class="fa-solid fa-circle-info" style="font-size: 1.6rem; color: var(--cyan);"></i>
+          <div>
+            <h4 style="font-size: 0.95rem;">Why Proof-of-Work Projects Matter More Than Certificates</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">90% of freshers copy code from YouTube tutorials. Recruiters immediately recognize identical boilerplate projects. PathPilot requires you to build spec-driven architectures with independent commit history and deployable cloud links.</p>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projectsContainer">
+          <!-- Populated from data/roadmaps.js -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 4: ATS RESUME BUILDER                 -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-resume">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Role-Specific <span class="text-gradient">ATS Resume Generator</span></h2>
+            <p>Single-column, recruiter-tested LaTeX style layout. Quantify impact and import verified PathPilot projects with 1 click.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-secondary" id="importProjectsToResumeBtn">
+              <i class="fa-solid fa-file-import"></i> Auto-Fill My Projects
+            </button>
+            <button class="btn btn-primary" id="printResumePdfBtn">
+              <i class="fa-solid fa-print"></i> Download / Print PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- ATS Score Dial Header -->
+        <div class="ats-score-box">
+          <div class="ats-dial">
+            <div class="score-circle">
+              <div class="score-circle-inner" id="atsScoreValue">92</div>
+            </div>
+            <div>
+              <h4 style="font-size: 1.05rem;">ATS Optimization Score: <span style="color: #34d399;" id="atsScoreStatus">Excellent</span></h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted);" id="atsFeedbackSummary">Contains high-impact action verbs, quantifiable metrics, and single-column layout.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="exportLatexCodeBtn">
+              <i class="fa-solid fa-code"></i> Copy LaTeX
+            </button>
+          </div>
+        </div>
+
+        <div class="resume-builder-layout">
+          <!-- Left: Form Controls -->
+          <div class="form-panel">
+            <h3 style="font-size: 1.15rem; margin-bottom: 1.25rem;"><i class="fa-solid fa-pen-to-square text-gradient"></i> Resume Content Editor</h3>
+
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" id="resumeNameInput" value="Pritam Singh" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="resumeEmailInput" value="pritam.singh.dev@gmail.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-input" id="resumePhoneInput" value="+91 98765 43210" />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">LinkedIn Profile URL</label>
+                <input type="text" class="form-input" id="resumeLinkedinInput" value="linkedin.com/in/pritamsingh" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">GitHub Profile URL</label>
+                <input type="text" class="form-input" id="resumeGithubInput" value="github.com/pritamsingh" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">College & Degree</label>
+              <input type="text" class="form-input" id="resumeEducationInput" value="B.Tech Computer Science & Engineering | CGPA: 8.4 (2025)" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Core Technical Skills (Comma-separated)</label>
+              <input type="text" class="form-input" id="resumeSkillsInput" value="React 18, JavaScript (ES6+), TypeScript, HTML5/CSS3, Tailwind CSS, Supabase, PostgreSQL, Git/GitHub, REST APIs" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Project 1: Title & Tech Stack</label>
+              <input type="text" class="form-input" id="resumeProj1Title" value="FinTrack: Personal Wealth & Expense Analytics Platform | React, Tailwind, Supabase" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Project 1 Bullet Points (Use Google X-Y-Z formula)</label>
+              <textarea class="form-textarea" id="resumeProj1Bullets">- Engineered a responsive financial analytics application managing 500+ monthly transactions with dynamic Chart.js breakdowns.
+- Achieved a 98/100 Google Lighthouse performance score by implementing code splitting and custom memoized aggregation hooks.
+- Integrated Supabase Row-Level Security (RLS) to enforce isolated multi-tenant authentication and automated CSV export.</textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Project 2: Title & Tech Stack</label>
+              <input type="text" class="form-input" id="resumeProj2Title" value="DevCollab: Real-Time Developer Project & Review Radar | React, Vite, Node, PostgreSQL" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Project 2 Bullet Points</label>
+              <textarea class="form-textarea" id="resumeProj2Bullets">- Architected a community showcase platform enabling 150+ student developers to submit code repositories for peer code review.
+- Built reusable custom hooks (`useDebounce`, `useLocalStorage`) reducing redundant API queries by 65%.
+- Configured automated GitHub Actions CI/CD pipeline deploying live preview builds on Vercel with zero downtime.</textarea>
+            </div>
+          </div>
+
+          <!-- Right: Live LaTeX-Style Paper Preview -->
+          <div class="resume-paper-container" id="resumePaperPreview">
+            <h2 id="paperName">Pritam Singh</h2>
+            <div class="resume-contact-bar">
+              <span id="paperEmail">pritam.singh.dev@gmail.com</span> •
+              <span id="paperPhone">+91 98765 43210</span> •
+              <a href="#" id="paperLinkedin">linkedin.com/in/pritamsingh</a> •
+              <a href="#" id="paperGithub">github.com/pritamsingh</a>
+            </div>
+
+            <div class="resume-section-heading">Education</div>
+            <div class="resume-job-title" id="paperEducation">B.Tech Computer Science & Engineering | CGPA: 8.4</div>
+            <div class="resume-sub-info">
+              <span>Tier-2 / Tier-3 Engineering College</span>
+              <span>2021 – 2025</span>
+            </div>
+
+            <div class="resume-section-heading">Technical Skills</div>
+            <p style="font-size: 0.82rem; margin-bottom: 0.5rem;" id="paperSkills">
+              <strong>Frontend & Web:</strong> React 18, JavaScript (ES6+), TypeScript, HTML5/CSS3, Tailwind CSS<br />
+              <strong>Backend & Data:</strong> Supabase, PostgreSQL, REST APIs, Git/GitHub, CI/CD
+            </p>
+
+            <div class="resume-section-heading">Featured Engineering Projects (Proof-of-Work)</div>
+            
+            <div class="resume-job-title" id="paperProj1Title">FinTrack: Personal Wealth & Expense Analytics Platform</div>
+            <div class="resume-sub-info">
+              <span>React 18, Tailwind, Supabase, Vercel</span>
+              <span>Live: fintrack-app.vercel.app</span>
+            </div>
+            <ul class="resume-bullet-list" id="paperProj1List">
+              <li>Engineered a responsive financial analytics application managing 500+ monthly transactions with dynamic Chart.js breakdowns.</li>
+              <li>Achieved a 98/100 Google Lighthouse performance score by implementing code splitting and custom memoized aggregation hooks.</li>
+              <li>Integrated Supabase Row-Level Security (RLS) to enforce isolated multi-tenant authentication and automated CSV export.</li>
+            </ul>
+
+            <div class="resume-job-title" id="paperProj2Title">DevCollab: Real-Time Developer Project & Review Radar</div>
+            <div class="resume-sub-info">
+              <span>React, Vite, Node.js, PostgreSQL</span>
+              <span>Live: devcollab-live.vercel.app</span>
+            </div>
+            <ul class="resume-bullet-list" id="paperProj2List">
+              <li>Architected a community showcase platform enabling 150+ student developers to submit code repositories for peer code review.</li>
+              <li>Built reusable custom hooks (`useDebounce`, `useLocalStorage`) reducing redundant API queries by 65%.</li>
+              <li>Configured automated GitHub Actions CI/CD pipeline deploying live preview builds on Vercel with zero downtime.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 5: CURATED FRESHER JOB RADAR          -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-jobs">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Curated Fresher <span class="text-gradient">Off-Campus Job Radar</span></h2>
+            <p>100% verified off-campus hiring drives and paid startup internships. Zero ghosting scams or unpaid training fees.</p>
+          </div>
+          <div class="job-badge-tag" style="font-size: 0.85rem; padding: 0.35rem 0.75rem;">
+            <i class="fa-solid fa-shield-check"></i> Verified Legit Policy Active
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="jobs-filter-bar">
+          <input type="text" class="form-input" id="jobSearchInput" placeholder="Search by role, company, or tech stack (e.g. React, SQL, Remote)..." style="max-width: 380px;" />
+          
+          <select class="form-select" id="jobRoleFilter" style="max-width: 200px;">
+            <option value="all">All Roles</option>
+            <option value="Frontend">Frontend Dev</option>
+            <option value="Data">Data Analyst</option>
+            <option value="Backend">Backend / Cloud</option>
+            <option value="QA">QA Automation</option>
+          </select>
+
+          <select class="form-select" id="jobLocationFilter" style="max-width: 200px;">
+            <option value="all">All Locations</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Remote">Remote</option>
+            <option value="Mumbai">Mumbai</option>
+          </select>
+        </div>
+
+        <!-- Jobs List -->
+        <div id="jobsListContainer">
+          <!-- Populated from data/jobs.js -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 6: INTERVIEW READINESS & FLASHCARDS   -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-interview">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Fresher <span class="text-gradient">Interview Readiness Suite</span></h2>
+            <p>Master the top 50 high-yield technical and behavioral questions asked across off-campus hiring drives.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="prevCardBtn"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            <button class="btn btn-primary btn-sm" id="nextCardBtn">Next Card <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Flashcard Viewport -->
+        <div class="flashcard-viewport">
+          <div class="flashcard" id="interactiveFlashcard">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="card-category-tag" id="cardCategory">JavaScript • Frontend</span>
+                <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 99px;" id="cardDifficulty">High Yield</span>
+              </div>
+              <div class="card-body-text" id="cardQuestionText">
+                Explain the JavaScript Event Loop, Call Stack, Microtask Queue, and Macrotask Queue.
+              </div>
+              <div class="card-answer-revealed" id="cardAnswerText">
+                <!-- Answer text -->
+              </div>
+            </div>
+
+            <div>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.85rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.78rem; color: var(--cyan);"><i class="fa-solid fa-lightbulb"></i> <span id="cardTipText">Click card to reveal answer & tips</span></div>
+                <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);" id="cardCounter">1 of 8</div>
+              </div>
+            </div>
+          </div>
+          <p style="text-align: center; font-size: 0.78rem; color: var(--text-dim); margin-top: 0.75rem;">💡 Click anywhere on the card to flip between Question and Model Answer.</p>
+        </div>
+
+        <!-- Mock Interview Simulator Panel -->
+        <div class="diagnostic-card" style="margin-top: 2rem;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.35rem;"><i class="fa-solid fa-headset text-gradient"></i> AI / Peer Mock Interview Simulator</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Type or articulate your answer below to receive instant grading on Technical Precision, STAR structure, and conciseness.</p>
+
+          <div class="form-group">
+            <label class="form-label">Current Question to Practice:</label>
+            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;" id="mockCurrentQuestion">Tell me about a difficult bug you faced in your project and how you resolved it.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Response (Simulate an interview answer):</label>
+            <textarea class="form-textarea" id="mockAnswerInput" placeholder="In my project, we faced an issue where... I approached it by... The result was..." style="min-height: 110px;"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Simulates real technical recruiter screening.</div>
+            <button class="btn btn-primary" id="evaluateMockAnswerBtn">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Evaluate My Response
+            </button>
+          </div>
+
+          <!-- Instant Feedback Panel -->
+          <div id="mockFeedbackBox" style="display: none; margin-top: 1.5rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <h4 style="font-size: 1rem; color: #34d399;"><i class="fa-solid fa-circle-check"></i> Rubric Evaluation</h4>
+              <span class="mono" style="font-weight: 700; color: #fbbf24;" id="mockScoreDisplay">Score: 8.8 / 10</span>
+            </div>
+            <div id="mockFeedbackContent" style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 7: B2B EMPLOYER TALENT SEARCH         -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-employer">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>B2B Employer <span class="text-gradient">Talent Discovery Portal</span></h2>
+            <p>Direct pipeline for tech startups to hire freshers with 100% verified GitHub proof-of-work repositories.</p>
+          </div>
+          <div class="job-badge-tag" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: rgba(99, 102, 241, 0.4);">
+            <i class="fa-solid fa-handshake"></i> Placement Success Fee Model (₹15k - ₹25k / hire)
+          </div>
+        </div>
+
+        <div style="background: var(--bg-surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h4 style="font-size: 1.05rem; margin-bottom: 0.35rem;">Founder & Hiring Manager Advantage: Zero Pedigree Bias</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">Every candidate below has passed spec-driven milestone capstones, verified Git commit history, and automated code quality checks. Stop sifting through 1,000 unverified resumes.</p>
+        </div>
+
+        <div class="projects-grid" id="employerTalentList">
+          <!-- Populated from data/talentPool.js -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 8: CREATOR HUB & COMMUNITY SQUADS     -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-community">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h2>Founder YouTube Flywheel & <span class="text-gradient">Community Squads</span></h2>
+            <p>Built-in creator distribution engine (Zero CAC) + 5-person WhatsApp & Discord accountability squads.</p>
+          </div>
+        </div>
+
+        <div class="roadmap-overview-grid" style="margin-bottom: 2rem;">
+          <!-- Left: Founder Vision -->
+          <div class="roadmap-summary-card">
+            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+              <img src="./hero-banner.jpg" alt="PathPilot Platform Radar" style="width: 140px; height: 90px; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--border-medium);" />
+              <div>
+                <h3 style="font-size: 1.3rem;">The "Zero-Proprietary-Content" Thesis</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">By Founder & Tech Creator</p>
+              </div>
+            </div>
+            <p style="margin-top: 1.25rem; font-size: 0.88rem; color: #cbd5e1; line-height: 1.6;">
+              "Traditional bootcamps charge ₹50,000 to ₹3,00,000 for pre-recorded videos that are worse than the best free tutorials on YouTube. 
+              The problem isn't lack of content—it's <strong>structural paralysis</strong>. Freshers don't know the exact order to study, how to escape tutorial hell, or how to get their resumes past ATS filters. PathPilot orchestrates the open web into an unshakeable accountability machine."
+            </p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <a href="https://youtube.com" target="_blank" class="btn btn-secondary btn-sm" style="color: #f87171;">
+                <i class="fa-brands fa-youtube"></i> Visit Founder Channel
+              </a>
+              <button class="btn btn-primary btn-sm" id="generateViralPostBtn">
+                <i class="fa-brands fa-linkedin"></i> Generate LinkedIn Progress Post
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Study Squad Card -->
+          <div class="quick-action-panel">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <h4 style="font-size: 1.05rem;"><i class="fa-solid fa-user-group text-gradient"></i> 5-Person Squads</h4>
+                <span class="nav-pill-badge live">Squad #104</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">Students studying in squads have a <strong>74% completion rate</strong> vs 8% studying alone. Your current squad members:</p>
+
+              <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-elevated); padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.82rem;">
+                  <span><strong>You</strong> (Frontend Track)</span>
+                  <span style="color: #fbbf24;"><i class="fa-solid fa-fire"></i> Day 1</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-elevated); padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.82rem;">
+                  <span>Aditi K. (Pune)</span>
+                  <span style="color: #34d399;"><i class="fa-solid fa-circle-check"></i> Day 14</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-elevated); padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.82rem;">
+                  <span>Mohit S. (Jaipur)</span>
+                  <span style="color: #34d399;"><i class="fa-solid fa-circle-check"></i> Day 12</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-elevated); padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.82rem;">
+                  <span>Karan V. (Lucknow)</span>
+                  <span style="color: #fbbf24;"><i class="fa-solid fa-fire"></i> Day 18</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-outline-emerald btn-sm" style="margin-top: 1rem; width: 100%;" id="whatsappSquadBtn">
+              <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp Squad Group
+            </button>
+          </div>
+        </div>
+
+        <!-- Social Progress Card Generator Preview -->
+        <div class="diagnostic-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-size: 1.25rem;">Viral "Share Your Roadmap" Card Generator</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted);">Share your progress milestone on LinkedIn or Twitter to build your public proof-of-work in public.</p>
+            </div>
+            <button class="btn btn-primary" id="downloadCanvasCardBtn">
+              <i class="fa-solid fa-download"></i> Download Image
+            </button>
+          </div>
+
+          <div class="social-card-preview-box">
+            <canvas id="shareCanvas" width="800" height="420"></canvas>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PRO MEMBERSHIP CHECKOUT             -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="pricingModal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="closePricingModal">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span class="project-badge pro"><i class="fa-solid fa-crown"></i> Creator Community Pass</span>
+        <h3 style="font-size: 1.6rem; margin-top: 0.35rem;">Unlock PathPilot Pro</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem;">Accelerate your off-campus hiring journey with AI ATS review & verified talent status.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-plan-card">
+          <div>
+            <h4 style="font-size: 1.1rem;">Monthly Pro</h4>
+            <div style="font-size: 1.7rem; font-weight: 800; color: #fff; margin: 0.5rem 0;">₹499 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">/ month</span></div>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Full access to AI ATS optimizer & unlimited mock interviews.</p>
+            <ul style="list-style: none; font-size: 0.8rem; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.4rem;">
+              <li><i class="fa-solid fa-check text-gradient"></i> AI Resume Keyword Scanner</li>
+              <li><i class="fa-solid fa-check text-gradient"></i> Priority Job Radar Alerts</li>
+              <li><i class="fa-solid fa-check text-gradient"></i> Peer Practice Rooms</li>
+            </ul>
+          </div>
+          <button class="btn btn-secondary" id="buyMonthlyProBtn" style="width: 100%;">Select Monthly</button>
+        </div>
+
+        <div class="pricing-plan-card featured">
+          <div class="pricing-ribbon">Early Bird 70% Off</div>
+          <div>
+            <h4 style="font-size: 1.1rem; color: #fbbf24;">Lifetime Pass</h4>
+            <div style="font-size: 1.7rem; font-weight: 800; color: #fff; margin: 0.5rem 0;">₹1,999 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">one-time</span></div>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Pay once, access forever. Guaranteed B2B employer showcase badge.</p>
+            <ul style="list-style: none; font-size: 0.8rem; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.4rem;">
+              <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Everything in Monthly Pro</li>
+              <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Verified Proof-of-Work Badge</li>
+              <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Direct Startup Referral Radar</li>
+              <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Lifetime Updates & Roadmaps</li>
+            </ul>
+          </div>
+          <button class="btn btn-gradient" id="buyLifetimeProBtn" style="width: 100%;">Claim Lifetime Pass</button>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+        <input type="text" class="form-input" id="couponInput" placeholder="Enter YouTube coupon (e.g. CREATOR100)" />
+        <button class="btn btn-secondary" id="applyCouponBtn">Apply</button>
+      </div>
+      <div id="couponMessage" style="font-size: 0.8rem; color: #34d399; margin-top: 0.35rem; display: none;">Coupon applied: 100% discount on Early Bird!</div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: GITHUB VERIFICATION SIMULATOR       -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="verifyProjectModal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="closeVerifyModal">&times;</button>
+      <div style="margin-bottom: 1.25rem;">
+        <span class="project-badge standard">Automated Proof-of-Work Audit</span>
+        <h3 style="font-size: 1.4rem; margin-top: 0.35rem;" id="modalProjectTitle">Verify Capstone Project</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Submit your repository and deployed link. Our engine checks README specs, commit history, and deployment health.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">GitHub Repository URL</label>
+        <input type="url" class="form-input" id="verifyGithubUrl" placeholder="https://github.com/your-username/fintrack" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Live Deployment URL (Vercel / Netlify / Render)</label>
+        <input type="url" class="form-input" id="verifyLiveUrl" placeholder="https://fintrack-live.vercel.app" />
+      </div>
+
+      <!-- Verification checklist animation container -->
+      <div id="verificationAuditStatus" style="display: none; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem; margin: 1.25rem 0;">
+        <div style="font-weight: 700; margin-bottom: 0.75rem; font-size: 0.95rem;">Automated Repository Audit in Progress...</div>
+        <ul style="list-style: none; font-size: 0.84rem; display: flex; flex-direction: column; gap: 0.5rem;" id="auditChecksList">
+          <li id="chk1"><i class="fa-solid fa-spinner fa-spin" style="color: var(--cyan);"></i> Checking repository accessibility & README structure...</li>
+          <li id="chk2" style="opacity: 0.4;"><i class="fa-solid fa-clock"></i> Validating commit history & anti-plagiarism checks...</li>
+          <li id="chk3" style="opacity: 0.4;"><i class="fa-solid fa-clock"></i> Pinging live deployment HTTP status 200...</li>
+          <li id="chk4" style="opacity: 0.4;"><i class="fa-solid fa-clock"></i> Issuing cryptographically signed Proof-of-Work Badge...</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" id="cancelVerifyBtn">Cancel</button>
+        <button class="btn btn-primary" id="runVerificationAuditBtn">Run Audit & Claim Badge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: REPORT OUTDATED RESOURCE            -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="reportLinkModal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="closeReportModal">&times;</button>
+      <div style="margin-bottom: 1.25rem;">
+        <h3 style="font-size: 1.35rem;">Community Resource Health Check</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Help keep PathPilot 100% current. Report broken videos or recommend better open resources.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Resource in Question</label>
+        <input type="text" class="form-input" id="reportResourceTitle" readonly />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Issue Type</label>
+        <select class="form-select" id="reportIssueType">
+          <option value="broken">Video is private, deleted, or link is 404</option>
+          <option value="outdated">Content is outdated / uses deprecated syntax</option>
+          <option value="better_alternative">I know a higher quality free YouTube video / tutorial</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Recommended Alternative URL / Details</label>
+        <textarea class="form-textarea" id="reportDetailsInput" placeholder="Paste YouTube link or explain what changed..."></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+        <button class="btn btn-secondary" id="cancelReportBtn">Cancel</button>
+        <button class="btn btn-primary" id="submitReportBtn">Submit Feedback</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Notes Floating Drawer -->
+  <div id="notesDrawer" style="display: none; position: fixed; right: 20px; bottom: 20px; width: 340px; background: var(--bg-surface-card); border: 1px solid var(--border-medium); border-radius: var(--radius-lg); padding: 1.25rem; box-shadow: var(--shadow-lg); z-index: 150;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+      <h4 style="font-size: 0.95rem;"><i class="fa-solid fa-pencil text-gradient"></i> In-App Study Notes</h4>
+      <button id="closeNotesDrawerBtn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;">&times;</button>
+    </div>
+    <textarea class="form-textarea" id="quickNotesArea" placeholder="Jot down formulas, syntax cheats, or questions to ask in Discord squad..." style="min-height: 140px; font-size: 0.84rem;"></textarea>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+      <span style="font-size: 0.72rem; color: #34d399;" id="notesSavedIndicator">Auto-saved to browser</span>
+      <button class="btn btn-secondary btn-sm" id="clearNotesBtn">Clear</button>
+    </div>
+  </div>
+
+  <!-- Main Application Script (ES Module) -->
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
